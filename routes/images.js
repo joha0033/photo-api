@@ -27,7 +27,7 @@ router.get("/:number_of_images/:image_prefix", function(req, res, next) {
 	let dirLength = getNumberOfFiles(photosDir);
 	
 	let images = [];
-  
+	// try and check for duplicate random numbers...
 	for(let i = numOfImages ; i > 0 ; i-- ){
 		let imageNumber = randomNumberGenerator(1, dirLength-1);
 		let fileName = imagePrefix+imageNumber+".jpg";
