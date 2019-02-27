@@ -19,7 +19,7 @@ const randomNumberGenerator = (start, finish) => {
 	return Math.floor(Math.random() * finish) + start;
 };
 
-/* GET images listing. */
+/* GET images path array. */
 router.get("/:number_of_images/:image_prefix", function(req, res, next) {
 	const photosDir = path.join(__dirname, "..", "photos");
 	const numOfImages = req.params.number_of_images;
@@ -30,13 +30,36 @@ router.get("/:number_of_images/:image_prefix", function(req, res, next) {
 	// try and check for duplicate random numbers...
 	for(let i = numOfImages ; i > 0 ; i-- ){
 		let imageNumber = randomNumberGenerator(1, dirLength-1);
-		let fileName = imagePrefix+imageNumber+".jpg";
-		images.push(photosDir+"/"+fileName);
+		let fileName = imagePrefix+imageNumber;
+		images.push("https://photo-api-2019.herokuapp.com/images/"+fileName);
 	}
   
 	res.json({
 		images
 	});
 });
+
+/* GET image. */
+router.get('/:name', function (req, res, next) {
+	// handle :name that doesn't exist... thanks
+	const photosDir = path.join(__dirname, "..", "photos");
+	const fileName = req.params.name + '.jpg';
+	const options = {
+	  root: photosDir,
+	  dotfiles: 'deny',
+	  headers: {
+		  'x-timestamp': Date.now(),
+		  'x-sent': true
+	  }
+	};
+	
+	res.sendFile(fileName, options, function (err) {
+	  if (err) {
+		next(err);
+	  } else {
+		console.log('Sent:', fileName);
+	  }
+	});
+  });
 
 module.exports = router;
