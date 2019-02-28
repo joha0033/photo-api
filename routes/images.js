@@ -16,7 +16,8 @@ const getNumberOfFiles = (dir) => {
   return numberOfFiles;
 };
 
-const randomNumberGenerator = (start, finish) => Math.floor(Math.random() * finish) + start;
+const randomNumberGenerator = (start, finish) => 
+  Math.floor(Math.random() * finish) + start;
 
 /* GET images path array. */
 router.get('/array_of/:number_of_images', (req, res) => {
