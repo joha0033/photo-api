@@ -20,10 +20,10 @@ const randomNumberGenerator = (start, finish) => {
 };
 
 /* GET images path array. */
-router.get("/:number_of_images/:image_prefix", function(req, res, next) {
+router.get("/array_of/:number_of_images", function(req, res, next) {
 	const photosDir = path.join(__dirname, "..", "photos");
 	const numOfImages = req.params.number_of_images;
-	const imagePrefix = req.params.image_prefix;
+	const imagePrefix = 'image_';
 	let dirLength = getNumberOfFiles(photosDir);
 	
 	let images = [];
@@ -31,7 +31,8 @@ router.get("/:number_of_images/:image_prefix", function(req, res, next) {
 	for(let i = numOfImages ; i > 0 ; i-- ){
 		let imageNumber = randomNumberGenerator(1, dirLength-1);
 		let fileName = imagePrefix+imageNumber;
-		images.push("https://photo-api-2019.herokuapp.com/images/"+fileName);
+		images.push({url:"localhost:3000/images/"+fileName});
+		images.push({url:"https://photo-api-2019.herokuapp.com/images"+fileName});
 	}
   
 	res.json({
@@ -42,8 +43,11 @@ router.get("/:number_of_images/:image_prefix", function(req, res, next) {
 /* GET image. */
 router.get('/:name', function (req, res, next) {
 	// handle :name that doesn't exist... thanks
+	console.log('hit?');
+	
 	const photosDir = path.join(__dirname, "..", "photos");
 	const fileName = req.params.name + '.jpg';
+
 	const options = {
 	  root: photosDir,
 	  dotfiles: 'deny',
