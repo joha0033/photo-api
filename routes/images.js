@@ -31,7 +31,7 @@ router.get("/array_of/:number_of_images", function(req, res, next) {
 	for(let i = numOfImages ; i > 0 ; i-- ){
 		let imageNumber = randomNumberGenerator(1, dirLength-1);
 		let fileName = imagePrefix+imageNumber;
-		images.push({url:"localhost:3000/images/"+fileName});
+		// images.push({url:"localhost:3000/images/"+fileName});
 		images.push({url:"https://photo-api-2019.herokuapp.com/images"+fileName});
 	}
   
