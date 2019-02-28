@@ -16,6 +16,12 @@ const walkSync = (currentDirPath, callback) => {
 };
 
 walkSync(photosDir, (filePath) => {
+  console.log(photoId);
+  console.log(photosDir);
+  console.log(filePath);
+  console.log('=====================');
+  
+  
   fs.rename(filePath, `${photosDir}/image_${photoId}.jpg`, (err) => {
     if (err) throw err;
     console.log('Rename complete!'); // eslint-disable-line no-console
