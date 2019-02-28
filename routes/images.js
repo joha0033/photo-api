@@ -25,17 +25,19 @@ router.get('/array_of/:number_of_images', (req, res) => {
   const numOfImages = req.params.number_of_images;
   const imagePrefix = 'image_';
   const dirLength = getNumberOfFiles(photosDir);
-
   const images = [];
-  // try and check for duplicate random numbers...
-  for (let i = 0; i < numOfImages; i += 1) {
+  const uniqueNumberArray = []
+
+  while(uniqueNumberArray.length < numOfImages){
     const imageNumber = randomNumberGenerator(1, dirLength - 1);
-    const fileName = imagePrefix + imageNumber;
-    // images.push({url:"localhost:3000/images/"+fileName});
-    images.push({ 
-      id: imageNumber,
-      url: `https://photo-api-2019.herokuapp.com/images/${fileName}`,
-    });
+    if(uniqueNumberArray.indexOf(imageNumber) === -1){
+      uniqueNumberArray.push(imageNumber)
+      const fileName = imagePrefix + imageNumber;
+      images.push({ 
+        id: imageNumber,
+        url: `https://photo-api-2019.herokuapp.com/images/${fileName}`,
+      });
+    }
   }
 
   res.json({
